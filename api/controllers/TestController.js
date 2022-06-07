@@ -1,3 +1,5 @@
+import User from "../models/User";
+
 export default class TestController {
   async get(params) {
     let count = params.count ?? 3;
@@ -8,4 +10,12 @@ export default class TestController {
 
     return Data;
   };
+
+  async getUsers(params) {
+    if (params.id) {
+      return await new User().where('id', params.id);
+    } else {
+      return await new User().all();
+    }
+  }
 }
