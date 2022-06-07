@@ -14,7 +14,6 @@ export default async (req, res, next) => {
   url = url.split('/');
   console.log(findRoute(url.join('/'), req.method));
   let findedRoute = findRoute(url.join('/'), req.method);
-  console.log(findedRoute.path, new Date());
   if (findedRoute) {
     let result = await findedRoute.callback(req.params);
     res.setHeader('Content-Type', 'application/json')
