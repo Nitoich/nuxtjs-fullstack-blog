@@ -13,7 +13,7 @@ export default class TestController {
 
   async getUsers(params) {
     if (params.id) {
-      return await new User().where('id', params.id);
+      return await new User().where('login', 'like' ,`%${params.id}%`);
     } else {
       return await new User().all();
     }

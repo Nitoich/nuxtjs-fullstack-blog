@@ -62,7 +62,12 @@ export default class Model {
   async where(whereField, whereValue, selectFields = '*') {
     let SQL = `select ${selectFields} from ${this.table} where ${whereField} = '${whereValue}'`;
     let Data = await this.PromiseQuery(SQL);
-    console.log(Data)
+    return Data.result;
+  }
+
+  async where(whereField, signEqual, whereValue, selectedFields = '*') {
+    let SQL = `select ${selectedFields} from ${this.table} where ${whereField} ${signEqual} '${whereValue}'`;
+    let Data = await this.PromiseQuery(SQL);
     return Data.result;
   }
 }
