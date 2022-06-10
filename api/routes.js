@@ -10,7 +10,13 @@ const Routes = [
     method: "get",
     path: "/user",
     callback: new TestController().getUsers
+  },
+  {
+    method: "patch",
+    path: "/user",
+    callback: new TestController().updateUser
   }
+
 ];
 
 export { Routes };

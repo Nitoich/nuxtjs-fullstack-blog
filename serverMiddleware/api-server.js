@@ -1,4 +1,4 @@
-import { Routes, startCallback } from "../api/routes";
+import { Routes } from "../api/routes";
 
 function findRoute(neededRouteArray, method) {
   return Routes.find(route => {
@@ -12,10 +12,9 @@ function findRoute(neededRouteArray, method) {
 export default async (req, res, next) => {
   let url = req._parsedUrl.pathname.replace(/^\/+|\/+$|\.+/g, '');
   url = url.split('/');
-  console.log(findRoute(url.join('/'), req.method));
   let findedRoute = findRoute(url.join('/'), req.method);
   if (findedRoute) {
-    let result = await findedRoute.callback(req.params);
+    let result = await findedRoute.callback({params: req.params, body: req.body});
     res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify(result));
   } else {

@@ -34,13 +34,11 @@ export default class Model {
       }
     });
   }
-
   closeDB() {
     this.connectionInstance.end(() => {
       console.log("Mysql disconnected!")
     });
   }
-
   PromiseQuery(SQL) {
     return new Promise((resolve, reject) => {
       this.connectionInstance.query(SQL, (err, result, fields) => {
@@ -53,20 +51,22 @@ export default class Model {
       });
     })
   }
-
   async all(fields = '*') {
     let Data = await this.PromiseQuery(`select ${fields} from ${this.table}`);
     return Data.result;
   }
-
   async where(whereField, whereValue, selectFields = '*') {
     let SQL = `select ${selectFields} from ${this.table} where ${whereField} = '${whereValue}'`;
     let Data = await this.PromiseQuery(SQL);
     return Data.result;
   }
-
   async where(whereField, signEqual, whereValue, selectedFields = '*') {
     let SQL = `select ${selectedFields} from ${this.table} where ${whereField} ${signEqual} '${whereValue}'`;
+    let Data = await this.PromiseQuery(SQL);
+    return Data.result;
+  }
+  async update(record, field, value){
+    let SQL = `update ${this.table} set ${field} = '${value}' where id = ${record.id}`;
     let Data = await this.PromiseQuery(SQL);
     return Data.result;
   }
